@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_30_114944) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_07_095717) do
   create_table "authors", force: :cascade do |t|
     t.string "first_name", limit: 100
     t.string "last_name", limit: 100
@@ -34,4 +34,25 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_30_114944) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "libraries", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.integer "capacity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "library_books", force: :cascade do |t|
+    t.integer "library_id", null: false
+    t.integer "book_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_library_books_on_book_id"
+    t.index ["library_id"], name: "index_library_books_on_library_id"
+  end
+
+  add_foreign_key "library_books", "books"
+  add_foreign_key "library_books", "libraries"
 end

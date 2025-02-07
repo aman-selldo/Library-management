@@ -1,6 +1,8 @@
 class Book < ApplicationRecord
     belongs_to :category
     belongs_to :author
+    has_many :library_books, dependent: :destroy
+    has_many :libraries, through: :library_books
 
 
     validates :title, presence: true, uniqueness: {case_sensitive: false}, length: {maximum: 255}
