@@ -4,4 +4,5 @@ class LibraryBook < ApplicationRecord
   
   validates :library_id, presence: true 
   validates :book_id, presence: true
+  validates :quantity, presence: true
 end

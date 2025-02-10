@@ -1,5 +1,4 @@
 class LibrariesController < ApplicationController
-
     def index
         @libraries = Library.all
 
@@ -25,9 +24,15 @@ class LibrariesController < ApplicationController
     def create
         @library = Library.new(library_params)
         if @library.save
-            redirect_to @library, notice: 'Library created successfully'
+           respond_to do |format|
+            format.html {render_to @library, notice: 'Library created successfully'}
+            format.json {render json: @library, status: :created}
+           end 
         else
-            render :new
+            respond_to do |format|
+                format.html {render :new}
+                format.json {render json: @library.errors, status: :unprocessable_entity}
+            end 
         end
     end
 
@@ -38,16 +43,31 @@ class LibrariesController < ApplicationController
     def update
         @library = Library.find(params[:id])
         if @library.update(library_params)
-            redirect_to @library, notice: 'Library was updated successfully.'
-        else
-            render :edit
+            respond_to do |format|
+                format.html {render :edit}
+                format.json {render json: @library}
+            end
+        else 
+            respond_to do |format|
+                format.html {render :edit}
+                format.json {render json: @library.errors, status: :unprocessable_entity}
+            end
         end
     end
 
     def destroy
         @library = Library.find(params[:id])
-        @library.destroy
-        redirect_to libraries_url, notice: 'Library was deleted successfully'
+        if @library.destroy
+            respond_to do |format|
+                format.html {redirect_to libraries_url, notice: 'Library was deleted successfully'}
+                format.json {head :no_content}
+            end
+        else
+            respond_to do |format|
+                format.html {redirect_to libraries_url, alert: 'Library could not be deleted'}
+                format.json {render json: {errors: 'Libaray could not be deleted!'}, status: :unprocessable_entity}
+            end
+        end
     end
 
     private
