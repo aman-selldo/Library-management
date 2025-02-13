@@ -1,9 +1,76 @@
-<h1>Book Details</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
 
-<p><strong>Title:</strong> <%= @book.title %></p>
-<p><strong>Author:</strong> <%= @book.author.full_name %></p>
-<p><strong>Category:</strong> <%= @book.category.name %></p>
-<p><strong>Published Year:</strong> <%= @book.published_year %></p>
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
 
-<%= link_to 'Edit', edit_book_path(@book) %> |
-<%= link_to 'Back to List', books_path %> 
+    .details-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .details-container p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .details-container p strong {
+      color: #333;
+    }
+
+    .actions {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .actions a {
+      color: #007bff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .actions a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Book Details</h1>
+
+  <div class="details-container">
+    <p><strong>Title:</strong> <%= @book.title %></p>
+    <p><strong>Author:</strong> <%= @book.author.full_name %></p>
+    <p><strong>Category:</strong> <%= @book.category.name %></p>
+    <p><strong>Published Year:</strong> <%= @book.published_year %></p>
+  </div>
+
+  <div class="actions">
+    <%= link_to 'Edit', edit_book_path(@book) %> |
+    <%= link_to 'Back to List', books_path %>
+  </div>
+</body>
+</html>
