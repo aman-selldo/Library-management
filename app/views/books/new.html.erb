@@ -129,22 +129,22 @@
 
       <div class="field">
         <%= form.label :title %>
-        <%= form.text_field :title %>
+        <%= form.text_field :title, required: true %>
       </div>
 
       <div class="field">
         <%= form.label :author_id %>
-        <%= form.collection_select :author_id, Author.all, :id, :full_name, prompt: "Select an Author" %>
+        <%= form.collection_select :author_id, Author.all, :id, :full_name, { prompt: "Select an Author" }, required: true %>
       </div>
 
       <div class="field">
         <%= form.label :category_id %>
-        <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Select a Category" %>
+        <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select a Category" }, required: true %>
       </div>
 
       <div class="field">
         <%= form.label :published_year %>
-        <%= form.number_field :published_year %>
+        <%= form.number_field :published_year, required: true %>
       </div>
 
       <div class="actions">
@@ -154,5 +154,44 @@
   </div>
 
   <%= link_to 'Back to List', books_path, class: "back-link" %>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', function(event) {
+        let isValid = true;
+
+        const title = document.querySelector('#book_title');
+        const author = document.querySelector('#book_author_id');
+        const category = document.querySelector('#book_category_id');
+        const publishedYear = document.querySelector('#book_published_year');
+
+        if (!title.value.trim()) {
+          isValid = false;
+          alert('Title cannot be blank');
+        }
+
+        if (!author.value) {
+          isValid = false;
+          alert('Author must be selected');
+        }
+
+        if (!category.value) {
+          isValid = false;
+          alert('Category must be selected');
+        }
+
+        if (!publishedYear.value.trim()) {
+          isValid = false;
+          alert('Published year cannot be blank');
+        }
+
+        if (!isValid) {
+          event.preventDefault();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
